@@ -2,6 +2,9 @@
 
 namespace Restaraunt.Booking
 {
+    /// <summary>
+    /// Массовая отправка сообщений на бронирование
+    /// </summary>
     internal class Program
     {
         private static async Task Main(string[] args)

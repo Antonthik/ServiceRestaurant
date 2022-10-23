@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Notification
 {
+    /// <summary>
+    /// Слушаем брокера сообщений
+    /// </summary>
     public class Worker : BackgroundService
     {
         private readonly Consumer _consumer;
