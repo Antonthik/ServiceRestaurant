@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace Restaraunt.Booking
 {
-    internal class Table
+    public class Table
     {
         public State State { get; private set; }
         public int SeatsCount { get; }
         public int Id { get; }
+
+        private readonly object _lock = new object();
+        private static readonly Random Random = new();
 
         public Table(int id)
         {
@@ -19,6 +22,11 @@ namespace Restaraunt.Booking
             SeatsCount = Random.Next(2, 5); //пусть количество мест за каждым столом будет случайным, от 2х до 5ти
         }
 
+        /// <summary>
+        /// Установка занятости стола
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public bool SetState(State state)
         {
             lock (_lock)
@@ -31,8 +39,7 @@ namespace Restaraunt.Booking
             }
         }
 
-        private readonly object _lock = new object();
-        private static readonly Random Random = new();
+ 
 
     }
 }
