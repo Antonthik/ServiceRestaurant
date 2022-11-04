@@ -6,18 +6,31 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Messages
 {
+    //public class TableBooked : ITableBooked
+    //{
+    //    public Guid OrderId { get; }
+    //    public Guid ClientId { get; }
+    //    public Dish? PreOrder { get; }
+    //    public bool Success { get; }
+    //    public TableBooked(Guid orderId, Guid clientId, bool success, Dish? preOrder = null)
+    //    {
+    //        OrderId = orderId;
+    //        ClientId = clientId;
+    //        Success = success;
+    //        PreOrder = preOrder;
+    //    }
+    //}
+
     public class TableBooked : ITableBooked
     {
-        public Guid OrderId { get; }
-        public Guid ClientId { get; }
-        public Dish? PreOrder { get; }
-        public bool Success { get; }
-        public TableBooked(Guid orderId, Guid clientId, bool success, Dish? preOrder = null)
+        public TableBooked(Guid orderId, bool success)
         {
             OrderId = orderId;
-            ClientId = clientId;
             Success = success;
-            PreOrder = preOrder;
         }
+
+        public Guid OrderId { get; }
+        public bool Success { get; }
+        public DateTime CreationDate { get; }
     }
 }

@@ -11,32 +11,116 @@ namespace Restaurant.Notification
     /// </summary>
     internal class Program
     {
-        public static void Main(string[] args)
-        {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
-            CreateHostBuilder(args).Build().Run();//запуск хоста для прослушивания сообщений
-        }
-
-        // public static IHostBuilder CreateHostBuilder(string[] args) =>
+        // public static void Main(string[] args)
+        // {
+        //     Console.OutputEncoding = System.Text.Encoding.UTF8;
+        //     CreateHostBuilder(args).Build().Run();//запуск хоста для прослушивания сообщений
+        // }
+        //
+        // // public static IHostBuilder CreateHostBuilder(string[] args) =>
+        // //     Host.CreateDefaultBuilder(args)
+        // //         .ConfigureServices((hostContext, services) =>
+        // //         {
+        // //             services.AddHostedService<Worker>();
+        // //         });
+        //
+        //// .Notification - сервис отправки уведомлений, ожидает подтверждения от кухни и от сервиса бронирования;
+        // private static IHostBuilder CreateHostBuilder(string[] args) =>
         //     Host.CreateDefaultBuilder(args)
         //         .ConfigureServices((hostContext, services) =>
         //         {
-        //             services.AddHostedService<Worker>();
+        //             services.AddMassTransit(x =>
+        //             {
+        //                 x.AddConsumer<NotifierTableBookedConsumer>();// опубликовать событие,что столик забронирован(TableBooked) и определить потребителя этого сообщения - NotifierTableBookedConsumer
+        //                 x.AddConsumer<KitchenReadyConsumer>();//слушаем кухню
+        //
+        //                 x.UsingRabbitMq((context, cfg) =>// указываем, что в качестве транспорта мы будем использовать rabbitMq
+        //                 {
+        //                     cfg.UseMessageRetry(r =>//конфигурация подключения
+        //                     {
+        //                         r.Exponential(5,
+        //                             TimeSpan.FromSeconds(1),
+        //                             TimeSpan.FromSeconds(100),
+        //                             TimeSpan.FromSeconds(5));
+        //                         r.Ignore<StackOverflowException>();
+        //                         r.Ignore<ArgumentNullException>(x => x.Message.Contains("Consumer"));
+        //                     });
+        //
+        //
+        //                     cfg.ConfigureEndpoints(context);
+        //                 });
+        //
+        //
+        //
+        //             });
+        //             services.AddSingleton<Notifier>();
+        //             services.AddMassTransitHostedService(true);//в 8-ой версии MassTransit.RabbitMQ эта строка не нужна
         //         });
+        // public static void Main(string[] args)
+        // {
+        //     Console.OutputEncoding = System.Text.Encoding.UTF8;
+        //     CreateHostBuilder(args).Build().Run();
+        // }
+        //
+        // private static IHostBuilder CreateHostBuilder(string[] args) =>
+        //     Host.CreateDefaultBuilder(args)
+        //         .ConfigureServices((hostContext, services) =>
+        //         {
+        //             services.AddMassTransit(x =>
+        //             {
+        //                 x.AddConsumer<RestaurantBookingRequestConsumer>()
+        //                     .Endpoint(e =>
+        //                     {
+        //                         e.Temporary = true;
+        //                     });
+        //
+        //                 x.AddConsumer<BookingRequestFaultConsumer>()
+        //                     .Endpoint(e =>
+        //                     {
+        //                         e.Temporary = true;
+        //                     });
+        //
+        //                 x.AddSagaStateMachine<RestaurantBookingSaga, RestaurantBooking>()
+        //                     .Endpoint(e => e.Temporary = true)
+        //                     .InMemoryRepository();
+        //
+        //                 x.AddDelayedMessageScheduler();
+        //
+        //                 x.UsingRabbitMq((context, cfg) =>
+        //                 {
+        //                     cfg.UseDelayedMessageScheduler();
+        //                     cfg.UseInMemoryOutbox();
+        //                     cfg.ConfigureEndpoints(context);
+        //                 });
+        //
+        //             });
+        //
+        //             services.AddMassTransitHostedService();
+        //
+        //             services.AddTransient<RestaurantBooking>();
+        //             services.AddTransient<RestaurantBookingSaga>();
+        //             services.AddTransient<Restaurant>();
+        //
+        //             services.AddHostedService<Worker>();
+        //         });   
+        public static void Main(string[] args)
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            CreateHostBuilder(args).Build().Run();
+        }
 
-       // .Notification - сервис отправки уведомлений, ожидает подтверждения от кухни и от сервиса бронирования;
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddMassTransit(x =>
                     {
-                        x.AddConsumer<NotifierTableBookedConsumer>();// опубликовать событие,что столик забронирован(TableBooked) и определить потребителя этого сообщения - NotifierTableBookedConsumer
-                        x.AddConsumer<KitchenReadyConsumer>();//слушаем кухню
+                        x.AddConsumer<NotifyConsumer>()
+                            .Endpoint(e => e.Temporary = true);
 
-                        x.UsingRabbitMq((context, cfg) =>// указываем, что в качестве транспорта мы будем использовать rabbitMq
+                        x.UsingRabbitMq((context, cfg) =>
                         {
-                            cfg.UseMessageRetry(r =>//конфигурация подключения
+                            cfg.UseMessageRetry(r =>
                             {
                                 r.Exponential(5,
                                     TimeSpan.FromSeconds(1),
@@ -49,12 +133,10 @@ namespace Restaurant.Notification
 
                             cfg.ConfigureEndpoints(context);
                         });
-
-
-
                     });
+
                     services.AddSingleton<Notifier>();
-                    services.AddMassTransitHostedService(true);//в 8-ой версии MassTransit.RabbitMQ эта строка не нужна
+                    services.AddMassTransitHostedService(true);
                 });
     }
 }

@@ -12,7 +12,26 @@ namespace Restaurant.Kitchen
     /// <summary>
     /// Публикуем сообщения кухни о готовности заказа
     /// </summary>
-    public class Manager
+    // public class Manager
+    // {
+    //     private readonly IBus _bus;
+    //
+    //     public Manager(IBus bus)
+    //     {
+    //         _bus = bus;
+    //     }
+    //
+    //     /// <summary>
+    //     /// Метод Издатель - публикация сообщений о готовности заказа со стороны кухни
+    //     /// </summary>
+    //     /// <param name="orderId"></param>
+    //     /// <param name="dish"></param>
+    //     public void CheckKitchenReady(Guid orderId, Dish? dish)
+    //     {
+    //         _bus.Publish<IKitchenReady>(new KitchenReady(orderId, true));
+    //     }
+    // }
+    internal class Manager
     {
         private readonly IBus _bus;
 
@@ -21,14 +40,10 @@ namespace Restaurant.Kitchen
             _bus = bus;
         }
 
-        /// <summary>
-        /// Метод Издатель - публикация сообщений о готовности заказа со стороны кухни
-        /// </summary>
-        /// <param name="orderId"></param>
-        /// <param name="dish"></param>
-        public void CheckKitchenReady(Guid orderId, Dish? dish)
+        public bool CheckKitchenReady(Guid orderId, Dish? dish)
         {
-            _bus.Publish<IKitchenReady>(new KitchenReady(orderId, true));
+            return true;
         }
+
     }
 }

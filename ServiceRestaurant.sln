@@ -8,6 +8,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaraunt.Booking", "Restaraunt.Booking\Restaraunt.Booking.csproj", "{50ECC54A-C198-4F6C-9D66-FC9F7B3F31FD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0CF52A92-CBBC-460C-8D40-1B9D8FBFD023} = {0CF52A92-CBBC-460C-8D40-1B9D8FBFD023}
+		{11B02335-E46D-4A64-9DC1-4A55B80B8986} = {11B02335-E46D-4A64-9DC1-4A55B80B8986}
 		{86AC8719-A12B-41D6-A9FF-E8BF7F1DCE54} = {86AC8719-A12B-41D6-A9FF-E8BF7F1DCE54}
 	EndProjectSection
 EndProject
@@ -16,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.Notification", "
 		{0CF52A92-CBBC-460C-8D40-1B9D8FBFD023} = {0CF52A92-CBBC-460C-8D40-1B9D8FBFD023}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Messages", "Restaurant.Messages\Restaurant.Messages.csproj", "{0CF52A92-CBBC-460C-8D40-1B9D8FBFD023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.Messages", "Restaurant.Messages\Restaurant.Messages.csproj", "{0CF52A92-CBBC-460C-8D40-1B9D8FBFD023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Kitchen", "Restaurant.Kitchen\Restaurant.Kitchen.csproj", "{11B02335-E46D-4A64-9DC1-4A55B80B8986}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.Kitchen", "Restaurant.Kitchen\Restaurant.Kitchen.csproj", "{11B02335-E46D-4A64-9DC1-4A55B80B8986}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

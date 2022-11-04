@@ -65,15 +65,27 @@ namespace Restaraunt.Booking
         /// </summary>
         /// <param name="countOfPersons"></param>
         /// <returns></returns>
+        //public async Task<bool?> BookFreeTableAsync(int countOfPersons)
+        //{
+        //    Console.WriteLine("Спасибо за Ваше обращение, я подберу столик и подтвержу вашу бронь," +
+        //                      "Вам придет уведомление");
+        //
+        //    var table = _tables.FirstOrDefault(t => t.SeatsCount > countOfPersons
+        //                                                && t.State == State.Free);
+        //    await Task.Delay(1000 * 5); //у нас нерасторопные менеджеры, 5 секунд они находятся в поисках стола
+        //    return table?.SetState(State.Booked);
+        //}
+
+
         public async Task<bool?> BookFreeTableAsync(int countOfPersons)
         {
-            Console.WriteLine("Спасибо за Ваше обращение, я подберу столик и подтвержу вашу бронь," +
+            Console.WriteLine($"Спасибо за Ваше обращение, я подберу столик и подтвержу вашу бронь," +
                               "Вам придет уведомление");
 
             var table = _tables.FirstOrDefault(t => t.SeatsCount > countOfPersons
-                                                        && t.State == State.Free);
-            await Task.Delay(1000 * 5); //у нас нерасторопные менеджеры, 5 секунд они находятся в поисках стола
-            return table?.SetState(State.Booked);
+                                                        && t.State == TableState.Free);
+            // await Task.Delay(100 * 5); //у нас нерасторопные менеджеры, 5 секунд они находятся в поисках стола
+            return table?.SetState(TableState.Booked);
         }
     }
 }

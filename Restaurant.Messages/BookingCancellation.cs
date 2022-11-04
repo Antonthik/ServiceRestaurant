@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Messages
 {
-    //public interface IKitchenReady
-    //{
-    //    public Guid OrderId { get; }
-    //
-    //    public bool Ready { get; }
-    //}
-    public interface IKitchenReady
+    public class BookingCancellation : IBookingCancellation
     {
+        public BookingCancellation(Guid orderId)
+        {
+            OrderId = orderId;
+        }
+
         public Guid OrderId { get; }
     }
-
-
 }
