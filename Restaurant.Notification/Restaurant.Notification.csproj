@@ -16,4 +16,9 @@
     <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Messaging\Messaging.csproj" />
+    <ProjectReference Include="..\Restaurant.Messages\Restaurant.Messages.csproj" />
+  </ItemGroup>
+
 </Project>
