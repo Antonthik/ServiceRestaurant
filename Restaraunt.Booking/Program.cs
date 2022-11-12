@@ -1,4 +1,5 @@
 ﻿
+using GreenPipes;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -81,13 +82,27 @@ namespace Restaraunt.Booking
                 {
                     services.AddMassTransit(x =>
                     {
+
                         x.AddConsumer<RestaurantBookingRequestConsumer>()
                             .Endpoint(e =>
                             {
                                 e.Temporary = true;
                             });
 
-                        x.AddConsumer<BookingRequestFaultConsumer>()
+                        x.AddConsumer<BookingRequestFaultConsumer>(config => 
+                            {
+                                config.UseScheduledRedelivery(r =>
+                                {
+                                    r.Intervals(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(20), 
+                                        TimeSpan.FromSeconds(30));//В случае долгой остановки службы включаем планировщик для повторной отправки по расписанию и не держать в памяти
+                                });
+
+                                config.UseMessageRetry(r =>
+                                {
+                                    r.Incremental(3, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(2));//Повтор сообщения в случае ошибки
+                                   // r.Handle<ArgumentNullException>();//Можно конфигурировать для конкретного вида исключения
+                                });
+                            })
                             .Endpoint(e =>
                             {
                                 e.Temporary = true;

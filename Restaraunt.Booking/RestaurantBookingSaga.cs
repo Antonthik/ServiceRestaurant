@@ -1,5 +1,4 @@
-﻿
-using Automatonymous;
+﻿using Automatonymous;
 using MassTransit;
 using Restaraunt.Booking.Consumers;
 using Restaurant.Messages;
@@ -91,7 +90,7 @@ namespace Restaraunt.Booking
         public Event<ITableBooked> TableBooked { get; private set; }
         public Event<IKitchenReady> KitchenReady { get; private set; }
 
-        public Event<Fault<IBookingRequest>> BookingRequestFault { get; private set; }
+        public Event<Fault<IBookingRequest>> BookingRequestFault { get; private set; }//Обработчик событий ошибок при бронировании
 
         public Schedule<RestaurantBooking, IBookingExpire> BookingExpired { get; private set; }
         public Event BookingApproved { get; private set; }

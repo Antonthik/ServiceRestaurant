@@ -21,7 +21,7 @@ namespace Restaraunt.Booking.Consumers
         {
             Console.WriteLine($"[OrderId: {context.Message.OrderId}]");
             var result = await _restaurant.BookFreeTableAsync(1);
-
+            throw new AggregateException();//При обнаружении throw - Mass Transit отправит в очередь ошибок,что произошла ошибка
             await context.Publish<ITableBooked>(new TableBooked(context.Message.OrderId, result ?? false));
         }
     }

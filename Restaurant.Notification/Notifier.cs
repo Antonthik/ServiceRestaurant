@@ -8,14 +8,14 @@ namespace Restaurant.Notification
     public class Notifier
     {
         //импровизированный кэш для хранения статусов, номера заказа и клиента
-        private readonly ConcurrentDictionary<Guid, Tuple<Guid?, Accepted>> _state = new();
+        //private readonly ConcurrentDictionary<Guid, Tuple<Guid?, Accepted>> _state = new();
 
-        /// <summary>
-        /// Метод для акцепта
-        /// </summary>
-        /// <param name="orderId"></param>
-        /// <param name="accepted"></param>
-        /// <param name="clientId"></param>
+       // /// <summary>
+       // /// Метод для акцепта
+       // /// </summary>
+       // /// <param name="orderId"></param>
+       // /// <param name="accepted"></param>
+       // /// <param name="clientId"></param>
         //public void Accept(Guid orderId, Accepted accepted, Guid? clientId = null)
         //{
         //    _state.AddOrUpdate(orderId, new Tuple<Guid?, Accepted>(clientId, accepted),
@@ -25,11 +25,11 @@ namespace Restaurant.Notification
         //    Notify(orderId);
         //}
 
-        /// <summary>
-        /// Метод для информирования о конечном статусе заказа
-        /// </summary>
-        /// <param name="orderId"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+       // /// <summary>
+       // /// Метод для информирования о конечном статусе заказа
+       // /// </summary>
+       // /// <param name="orderId"></param>
+       // /// <exception cref="ArgumentOutOfRangeException"></exception>
        // private void Notify(Guid orderId)
        // {
        //     var booking = _state[orderId];
