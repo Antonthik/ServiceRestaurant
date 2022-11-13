@@ -52,10 +52,12 @@ namespace Restaraunt.Booking
             {
                 await Task.Delay(1000, stoppingToken);
                 Console.WriteLine("Привет! Желаете забронировать столик?");
+                var b = Guid.NewGuid();
 
                 var dateTime = DateTime.Now;
                 await _bus.Publish(
-                    (IBookingRequest)new BookingRequest(NewId.NextGuid(), NewId.NextGuid(), null, dateTime),
+                    //(IBookingRequest)new BookingRequest(NewId.NextGuid(), NewId.NextGuid(), null, dateTime),
+                    (IBookingRequest)new BookingRequest(b, NewId.NextGuid(), null, dateTime),
                     stoppingToken);
             }
         }
