@@ -12,7 +12,7 @@ namespace Restaurant.Kitchen.Consumers
     {
         public Task Consume(ConsumeContext<Fault<IBookingRequest>> context)
         {
-            //Console.WriteLine($"[OrderId {context.Message.Message.OrderId}] Отмена на кухне");
+            Console.WriteLine($"[OrderId {context.Message.Message.OrderId}] Отмена на кухне");
             return Task.CompletedTask;
         }
     }

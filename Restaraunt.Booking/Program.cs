@@ -1,6 +1,7 @@
 ﻿
 using GreenPipes;
 using MassTransit;
+using MassTransit.Audit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Restaraunt.Booking.Consumers;
@@ -148,7 +149,13 @@ namespace Restaraunt.Booking
                 {
                     services.AddMassTransit(x =>
                     {
-                        x.AddConsumer<RestaurantBookingRequestConsumer>();
+
+                        services.AddSingleton<IMessageAuditStore, AuditStore>();//Аудит
+                        var serviceProvider = services.BuildServiceProvider();//Аудит
+                        var auditStore = serviceProvider.GetService<IMessageAuditStore>();//Аудит
+
+                        x.AddConsumer<RestaurantBookingRequestConsumer>();                        
+
                         //   x.AddConsumer<BookingRequestFaultConsumer>();
 
                         x.AddSagaStateMachine<RestaurantBookingSaga, RestaurantBooking>()
@@ -162,6 +169,9 @@ namespace Restaraunt.Booking
                             cfg.UseDelayedMessageScheduler();
                             cfg.UseInMemoryOutbox();
                             cfg.ConfigureEndpoints(context);
+
+                            cfg.ConnectSendAuditObservers(auditStore);//Аудит
+                            cfg.ConnectConsumeAuditObserver(auditStore);
                         });
 
                     });

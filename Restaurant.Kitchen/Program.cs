@@ -110,8 +110,9 @@ namespace Restaurant.Kitchen
                              //       }
                              //   );
                             });
+                        x.AddConsumer<KitchenTableBookedConsumer>();//слушаем кухню
 
-                        x.AddConsumer<KitchenBookingRequestFaultConsumer>();
+                        //x.AddConsumer<KitchenBookingRequestFaultConsumer>();
                         x.AddDelayedMessageScheduler();
 
                         x.UsingRabbitMq((context, cfg) =>
@@ -124,7 +125,7 @@ namespace Restaurant.Kitchen
 
                     services.AddSingleton<Manager>();
 
-                   // services.AddMassTransitHostedService(true);
+                    services.AddMassTransitHostedService(true);
                 });
     }
 }
